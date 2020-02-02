@@ -95,7 +95,7 @@ ModConsole.panel.CodeEditor = function(config) {
 			,xtype: Ext.ComponentMgr.types['modx-texteditor'] ? 'modx-texteditor' : 'textarea'
 			,mimeType: 'application/x-php'
 			,height: 300
-			,width: 'auto'
+			,width: '97%'
 			,style: {
 				margin: '15px'
 			}
@@ -216,8 +216,8 @@ Ext.extend(ModConsole.panel.CodeEditor,MODx.Panel, {
 
 		var area = Ext.getCmp('mod-console-codeeditor');
 		var code = area.getValue();
-        
-        
+
+
 		var upd = this.resultPanel.getUpdater();
 		upd.timeout = 0;
 		upd.update({

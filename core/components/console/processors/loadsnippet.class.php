@@ -1,6 +1,6 @@
 <?php
 
-require_once dirname(__FILE__) . '/console.class.php';
+require_once __DIR__. '/console.class.php';
 
 class ConsoleLoadSnippetProcessor extends modConsoleProcessor{
 

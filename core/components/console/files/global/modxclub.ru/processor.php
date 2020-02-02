@@ -1,6 +1,5 @@
 <?php 
-print '<pre>';
-ini_set('display_errors', 1);
+use MODX\Revolution\modNamespace;
 $modx->switchContext('web');
 $modx->setLogLevel(3);
 $modx->setLogTarget('HTML');
@@ -13,7 +12,7 @@ $params = array(
 if(!$response = $modx->runProcessor('site/web/getdata',
 $params
 , array(
-'processors_path' => $modx->getObject('modNamespace', $namespace)->getCorePath().'processors/',
+'processors_path' => $modx->getObject(modNamespace::class, $namespace)->getCorePath().'processors/',
 ))){
 print "Не удалось выполнить процессор";
 return;

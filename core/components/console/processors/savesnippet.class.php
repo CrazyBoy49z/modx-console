@@ -1,18 +1,29 @@
 <?php
 
-require_once dirname(__FILE__) . '/console.class.php';
+use MODX\Revolution\modSnippet;
 
-class ConsoleSaveSnippetProcessor extends modConsoleProcessor{
+require_once __DIR__.'/console.class.php';
 
-    public function process() {
-        $code = trim($this->getProperty('code',''));
+class ConsoleSaveSnippetProcessor extends modConsoleProcessor
+{
+
+    public function process()
+    {
+        $code = trim($this->getProperty('code', ''));
         $code = preg_replace('/^ *(<\?php|<\?)/mi', '', $code);
-        $snippet = trim($this->getProperty('name',''));
-        $overwrite = $this->getProperty('overwrite',false);
-        if ($o = $this->modx->getObject('modSnippet',array('name'=>$snippet))) {
+        $snippet = trim($this->getProperty('name', ''));
+        $overwrite = $this->getProperty('overwrite', false);
+        if ($o = $this->modx->getObject(modSnippet::class, array('name' => $snippet))) {
             if ($overwrite) {
                 /** @var modProcessorResponse $response */
-                $response = $this->modx->runProcessor('/element/snippet/update', array('id'=>$o->get('id'),'name'=>$snippet,'snippet'=>$code));
+                $response = $this->modx->runProcessor(
+                    '/Element/Snippet/Update',
+                    array(
+                        'id' => $o->get('id'),
+                        'name' => $snippet,
+                        'snippet' => $code,
+                    )
+                );
                 if ($response->isError()) {
                     return $this->failure($response->getMessage());
                 }
@@ -21,11 +32,15 @@ class ConsoleSaveSnippetProcessor extends modConsoleProcessor{
             }
         } else {
             /** @var modProcessorResponse $response */
-            $response = $this->modx->runProcessor('/element/snippet/create', array('name'=>$snippet,'snippet'=>$code));
+            $response = $this->modx->runProcessor(
+                '/Element/Snippet/Create',
+                array('name' => $snippet, 'snippet' => $code)
+            );
             if ($response->isError()) {
                 return $this->failure($response->getMessage());
             }
         }
+
         return $this->success();
     }
 }
